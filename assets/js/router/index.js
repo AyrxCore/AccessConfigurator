@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Index from '../pages/Index';
-import Page2 from "../pages/Page2";
+import HomePage from "../pages/HomePage";
+import Login from "../pages/Login";
 
 Vue.use(Router);
 
@@ -9,13 +9,13 @@ export default new Router({
     routes: [
         {
             path: '/',
-            name: 'Index',
-            component: Index
+            name: 'HomePage',
+            component: HomePage
         },
         {
-            path: '/page2',
-            name: 'Page2',
-            component: Page2
+            path: '/login',
+            name: 'Login',
+            component: Login
         }
     ]
 

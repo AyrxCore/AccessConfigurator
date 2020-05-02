@@ -19,6 +19,7 @@
         "@fortawesome/vue-fontawesome": "^0.1.9",
         "admin-lte": "^3.0.4",
         "axios": "^0.18.0",
+        "element-ui": "^2.13.1",
         "vue-awesome": "^4.0.2",
         "vue-router": "^3.0.1",
         "vuex": "^3.0.1"

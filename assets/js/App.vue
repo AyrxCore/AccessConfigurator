@@ -25,6 +25,7 @@
 
     #contentContainer {
         margin-left: 250px;
+        padding: 10px 20px;
     }
 
 </style>
