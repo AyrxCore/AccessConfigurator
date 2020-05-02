@@ -2,7 +2,9 @@
 
 namespace App\Controller;
 
+use Psr\Cache\InvalidArgumentException;
 use Symfony\Component\Cache\Adapter\AdapterInterface;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
@@ -15,10 +17,13 @@ class DefaultController extends Controller
     {
         return $this->render('app.html.twig');
     }
-
-
+    
+    
     /**
      * @Route("/hello", name="hello")
+     * @param AdapterInterface $cache
+     * @return JsonResponse
+     * @throws InvalidArgumentException
      */
     public function hello(AdapterInterface $cache)
     {
