@@ -2,7 +2,7 @@
     <aside class="main-sidebar sidebar-dark-primary elevation-4">
         <!-- Brand Logo -->
         <router-link to="/" class="brand-link">
-            <img src="../../../img/dra_picto.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
+            <img src="../../../../public/img/dra_picto.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
                  style="opacity: .8">
             <span class="brand-text font-weight-light">Access Configurator</span>
         </router-link>
@@ -11,12 +11,22 @@
         <div class="sidebar">
             <!-- Sidebar user panel (optional) -->
             <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-                <div class="image">
-                    <img src="../../../img/avatar_elpueblo.jpg" class="img-circle elevation-2" alt="User Image">
-                </div>
-                <div class="info">
-                    <a href="#" class="d-block">Risitas_69140</a>
-                </div>
+<!--                <div v-if="connected">-->
+                    <div class="image">
+                        <img src="../../../../public/img/avatar_elpueblo.jpg" class="img-circle elevation-2" alt="User Image">
+                    </div>
+                    <div class="info">
+                        <a href="#" class="d-block">Risitas_69140</a>
+                    </div>
+<!--                </div>-->
+<!--                <div v-else>-->
+<!--                    <div class="image">-->
+<!--                        <img src="../../../img/avatar_null.png" class="img-circle elevation-2" alt="User Image">-->
+<!--                    </div>-->
+<!--                    <div class="info">-->
+<!--                        <a href="#" class="d-block">Utilisateur inconnu</a>-->
+<!--                    </div>-->
+<!--                </div>-->
             </div>
 
             <!-- Sidebar Menu -->
@@ -107,7 +117,12 @@
 <script>
 
     export default {
-        name: "Aside"
+        name: "Aside",
+        data() {
+            return {
+                connected: false
+            }
+        }
     }
 
 </script>
