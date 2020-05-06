@@ -51,7 +51,7 @@
         },
         methods: {
             chooseSize() {
-                this.$router.push({name: 'OptionsStep', param:{model: 'Acacia', size: '85'}})
+                this.$router.push({name: 'OptionsStep', param:{model: 'Acacia', size: '85'}});
             }
         }
     }

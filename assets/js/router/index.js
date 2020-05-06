@@ -6,6 +6,7 @@ import ListProjects from "../pages/ListProjects";
 import ModelStep from "../pages/ModelStep";
 import SizeStep from "../pages/SizeStep";
 import OptionsStep from "../pages/OptionsStep";
+import SummaryStep from "../pages/SummaryStep";
 
 Vue.use(Router);
 
@@ -40,6 +41,11 @@ export default new Router({
             path: '/options',
             name: 'OptionsStep',
             component: OptionsStep
+        },
+        {
+            path: '/summary',
+            name: 'SummaryStep',
+            component: SummaryStep
         }
     ]
 
