@@ -8,7 +8,9 @@
                 </a>
             </li>
             <li class="nav-item d-none d-sm-inline-block">
-                <a href="#" class="nav-link">Home</a>
+                <router-link to="/projects" class="brand-link">
+                    <span class="brand-text font-weight-light">Home</span>
+                </router-link>
             </li>
             <li class="nav-item d-none d-sm-inline-block">
                 <a href="#" class="nav-link">Contact</a>

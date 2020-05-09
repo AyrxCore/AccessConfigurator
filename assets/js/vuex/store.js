@@ -3,8 +3,18 @@ import Vuex from 'vuex'
 
 Vue.use(Vuex);
 
-
-export default new Vuex.Store({
-    strict: true,
-    modules: {}
+export const store = new Vuex.Store({
+    state: {
+        authenticated: false
+    },
+    mutations: {
+        change (state, value) {
+            state.authenticated = value
+        }
+    },
+    getters: {
+        isAuthenticated: state => {
+            return state.authenticated === 'true' || state.authenticated === true;
+        }
+    }
 })

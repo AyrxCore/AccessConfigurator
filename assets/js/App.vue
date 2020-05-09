@@ -3,7 +3,7 @@
         <Aside></Aside>
         <Nav></Nav>
         <div id="contentContainer">
-            <router-view/>
+            <router-view v-bind:csrf_token="csrf_token"/>
         </div>
     </div>
 </template>
@@ -14,7 +14,8 @@
     import Aside from './components/main/Aside';
 
     export default {
-        name: 'app',
+        name: 'App',
+        props: ['csrf_token'],
         components: {
             Aside, Nav
         }

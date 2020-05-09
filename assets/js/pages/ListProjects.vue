@@ -136,7 +136,9 @@
                     lastname: '',
                     firstname: '',
                     address: ''
-                }
+                },
+                email: '',
+                roles: '',
             }
         },
         methods: {
@@ -149,6 +151,17 @@
             submitForm() {
                 this.$router.push({name: 'ModelStep'});
             },
+        },
+        created() {
+            fetch('/authenticated-user')
+                .then(response => response.json())
+                .then(user => {
+                    console.log("user: " + user);
+                    this.firstName = user.firstName
+                    this.lastName = user.lastName
+                    this.email = user.email
+                    this.roles = user.roles
+                })
         }
     }
 
