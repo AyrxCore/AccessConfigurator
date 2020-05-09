@@ -14,7 +14,6 @@ import 'element-ui/lib/theme-chalk/index.css';
 import 'vue-awesome/dist/vue-awesome';
 import 'vue-awesome/icons';
 import Icon from "vue-awesome/components/Icon";
-import routes from "./router/routes";
 
 Vue.component("v-icon", Icon);
 
@@ -25,11 +24,34 @@ Vue.use(VueRouter);
 Vue.config.productionTip = false;
 Vue.prototype.$http = axios;
 
+routerApp.beforeEach((to, from, next) => {
+    if (to.matched.some(record => record.meta.requiresAuth)) {
+        console.log('route need authentication')
+        if (store.getters.isAuthenticated !== false) {
+            console.log('user is authenticated: ' + store.getters.isAuthenticated)
+            next()
+        } else {
+            console.log('page should be redirect')
+            next({
+                path: '/login',
+                query: { redirect: to.fullPath }
+            })
+        }
+    } else {
+        next()
+    }
+});
+
 new Vue({
     el: '#app',
     router: routerApp,
     store,
     template: '<App/>',
     components: {App},
+    beforeMount () {
+        this.csrf_token = this.$el.attributes['data-token'].value
+        this.last_email = this.$el.attributes['data-last-email'].value
+        this.$store.commit('change', this.$el.attributes['data-is-authenticated'].value)
+    }
 });
 

@@ -137,6 +137,8 @@
                     firstname: '',
                     address: ''
                 },
+                firstName: '',
+                lastName: '',
                 email: '',
                 roles: '',
             }

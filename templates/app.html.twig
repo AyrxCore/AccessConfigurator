@@ -9,7 +9,11 @@
 </head>
 <body>
 
-<div id="app"></div>
+<div id="app"
+     data-token="{{ csrf_token('authenticate') }}"
+{#     data-last-email="{{ last_username }}"#}
+{#     data-is-authenticated="{{ is_authenticated }}"#}
+></div>
 
 <script src="{{ asset('build/runtime.js') }}"></script>
 <script src="{{ asset('build/app.js') }}"></script>

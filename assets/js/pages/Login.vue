@@ -28,8 +28,6 @@
 
 <script>
 
-    import ListProjects from "./ListProjects";
-
     export default {
         name: "Login",
         props: ['csrf_token', 'last_email'],
@@ -62,9 +60,8 @@
                         '_csrf_token': this.$props.csrf_token
                     })
                 })
-                    .then(response => response.json())
+                    .then(response => (response.json))
                     .then(data => {
-                        console.log(data)
                         if (data === 'authenticated') {
                             this.$store.commit('change', true);
                             console.log('user authenticated successfully ' + this.$store.getters.isAuthenticated);
