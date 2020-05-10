@@ -11,11 +11,11 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 class SecurityController extends AbstractController
 {
     /**
-     * @Route("/login", name="login", methods={"POST"})
+     * @Route("/login", name="login")
      * @param AuthenticationUtils $authenticationUtils
      * @return Response
      */
-    public function __invoke(AuthenticationUtils $authenticationUtils): Response
+    public function login(AuthenticationUtils $authenticationUtils): Response
     {
         // get the login error if there is one
         $error = $authenticationUtils->getLastAuthenticationError();
@@ -36,8 +36,6 @@ class SecurityController extends AbstractController
      */
     public function logout()
     {
-        // controller can be blank: it will never be executed!
-        throw new Exception('Don\'t forget to activate logout in security.yaml');
     }
     
 }

@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import App from './App.vue'
-import axios from 'axios'
+import Api from './api'
 import { store } from './vuex/store';
 import Vuex from 'vuex';
 import ElementUI from 'element-ui';
@@ -22,16 +22,13 @@ Vue.use(ElementUI);
 Vue.use(VueRouter);
 
 Vue.config.productionTip = false;
-Vue.prototype.$http = axios;
+Vue.prototype.$apiRequester = new Api();
 
 routerApp.beforeEach((to, from, next) => {
     if (to.matched.some(record => record.meta.requiresAuth)) {
-        console.log('route need authentication')
         if (store.getters.isAuthenticated !== false) {
-            console.log('user is authenticated: ' + store.getters.isAuthenticated)
             next()
         } else {
-            console.log('page should be redirect')
             next({
                 path: '/login',
                 query: { redirect: to.fullPath }

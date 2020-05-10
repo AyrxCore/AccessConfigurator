@@ -10,39 +10,43 @@ const routes = [
     {
         path: '/',
         name: 'HomePage',
-        component: HomePage,
-        meta: {requiresAuth: true}
+        component: HomePage
     },
     {
         path: '/login',
         name: 'Login',
         component: Login,
-        props: true
+        props: true,
     },
     {
         path: '/projects',
         name: 'ListProjects',
-        component: ListProjects
+        component: ListProjects,
+        meta: {requiresAuth: true}
     },
     {
         path: '/models',
         name: 'ModelStep',
-        component: ModelStep
+        component: ModelStep,
+        meta: {requiresAuth: true}
     },
     {
         path: '/sizes',
         name: 'SizeStep',
-        component: SizeStep
+        component: SizeStep,
+        meta: {requiresAuth: true}
     },
     {
         path: '/options',
         name: 'OptionsStep',
-        component: OptionsStep
+        component: OptionsStep,
+        meta: {requiresAuth: true}
     },
     {
         path: '/summary',
         name: 'SummaryStep',
-        component: SummaryStep
+        component: SummaryStep,
+        meta: {requiresAuth: true}
     }
 ];
 

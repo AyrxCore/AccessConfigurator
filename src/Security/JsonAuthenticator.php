@@ -45,7 +45,7 @@ class JsonAuthenticator extends AbstractFormLoginAuthenticator
     
     public function supports(Request $request)
     {
-        return 'app_account' === $request->attributes->get('_route')
+        return 'login' === $request->attributes->get('_route')
             && $request->isMethod('POST');
     }
     

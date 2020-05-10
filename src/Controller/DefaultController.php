@@ -5,37 +5,29 @@ namespace App\Controller;
 use Psr\Cache\InvalidArgumentException;
 use Symfony\Component\Cache\Adapter\AdapterInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class DefaultController extends Controller
 {
+
     /**
      * @Route("/", name="home")
      */
-    public function index()
+    public function index(AuthenticationUtils $authenticationUtils): Response
     {
-        return $this->render('app.html.twig');
-    }
+        // get the login error if there is one
+        $error = $authenticationUtils->getLastAuthenticationError();
+        // last username entered by the user
+        $lastUsername = $authenticationUtils->getLastUsername();
     
-    
-    /**
-     * @Route("/hello", name="hello")
-     * @param AdapterInterface $cache
-     * @return JsonResponse
-     * @throws InvalidArgumentException
-     */
-    public function hello(AdapterInterface $cache)
-    {
-        $hello = $cache->getItem('hello');
-
-        if ($hello->isHit())
-            return $this->json(false);
-
-        $hello->set(true);
-        $cache->save($hello);
-
-        return $this->json(true);
+        return $this->render('app.html.twig', [
+            'last_username' => $lastUsername,
+            'is_authenticated' => json_encode(!empty($this->getUser())),
+            'error' => $error
+        ]);
     }
 
 }

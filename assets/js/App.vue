@@ -1,6 +1,6 @@
 <template>
-    <div id="app">
-        <Aside></Aside>
+    <div>
+        <Aside :user="user"></Aside>
         <Nav></Nav>
         <div id="contentContainer">
             <router-view v-bind:csrf_token="csrf_token"/>
@@ -15,10 +15,25 @@
 
     export default {
         name: 'App',
-        props: ['csrf_token'],
         components: {
             Aside, Nav
-        }
+        },
+        data() {
+            return {
+                csrf_token: "",
+                last_email: "",
+                user: []
+            }
+        },
+        created() {
+            this.csrf_token = this.$parent.csrf_token;
+            this.last_email = this.$parent.last_email
+            fetch('/authenticated-user')
+                .then(response => response.json())
+                .then(user => {
+                    this.user = user
+                })
+        },
     }
 </script>
 

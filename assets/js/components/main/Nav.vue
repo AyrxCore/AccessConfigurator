@@ -8,12 +8,10 @@
                 </a>
             </li>
             <li class="nav-item d-none d-sm-inline-block">
-                <router-link to="/projects" class="brand-link">
-                    <span class="brand-text font-weight-light">Home</span>
-                </router-link>
+                <router-link to="/projects" class="nav-link">Projects</router-link>
             </li>
             <li class="nav-item d-none d-sm-inline-block">
-                <a href="#" class="nav-link">Contact</a>
+                <router-link to="/summary" class="nav-link">Summary</router-link>
             </li>
         </ul>
     </nav>

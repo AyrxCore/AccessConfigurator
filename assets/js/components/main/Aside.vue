@@ -10,24 +10,29 @@
         <!-- Sidebar -->
         <div class="sidebar">
             <!-- Sidebar user panel (optional) -->
-            <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-<!--                <div v-if="connected">-->
-                    <div class="image">
-                        <img src="/img/avatar_elpueblo.jpg" class="img-circle elevation-2" alt="User Image">
+            <el-container class="sidebar-user">
+                <div v-if="user['connected']" class="connected-container">
+                    <div class="user-container">
+                        <div class="user-img">
+                            <img src="/img/avatar_elpueblo.jpg" class="img-circle elevation-2" alt="User Image">
+                        </div>
+                        <div class="user-info">
+                            <p>{{ user.firstname }}</p>
+                            <p>{{ user.lastname }}</p>
+                        </div>
                     </div>
-                    <div class="info">
-                        <a href="#" class="d-block">Risitas_69140</a>
+                    <div class="logout-button">
+                        <el-button size="large" type="warning">
+                            <span @click="logout">Déconnexion</span>
+                        </el-button>
                     </div>
-<!--                </div>-->
-<!--                <div v-else>-->
-<!--                    <div class="image">-->
-<!--                        <img src="../../../img/avatar_null.png" class="img-circle elevation-2" alt="User Image">-->
-<!--                    </div>-->
-<!--                    <div class="info">-->
-<!--                        <a href="#" class="d-block">Utilisateur inconnu</a>-->
-<!--                    </div>-->
-<!--                </div>-->
-            </div>
+                </div>
+                <div v-else class="disconnected-container">
+                    <el-button size="large" type="primary">
+                        <router-link to="/login">Connexion</router-link>
+                    </el-button>
+                </div>
+            </el-container>
 
             <!-- Sidebar Menu -->
             <nav class="mt-2">
@@ -118,9 +123,14 @@
 
     export default {
         name: "Aside",
-        data() {
-            return {
-                connected: false
+        props: {
+            user: {}
+        },
+        methods: {
+            logout() {
+                this.$apiRequester.logout().then(response => {
+                    location.reload()
+                })
             }
         }
     }
@@ -128,5 +138,44 @@
 </script>
 
 <style scoped>
+
+    .sidebar-user {
+        margin: 1rem 0;
+        padding-bottom: 1rem;
+        display: flex;
+        justify-content: center;
+        border-bottom: 1px solid #4b545c;
+    }
+    .connected-container {
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+    }
+    .disconnected-container {
+
+    }
+    .user-container {
+        display: flex;
+        align-items: center;
+    }
+    .user-img {
+        max-width: 70px;
+    }
+    .user-img img {
+        width: 100%;
+    }
+    .user-info {
+        color: white;
+        margin-left: 20px;
+    }
+    .user-info p {
+        margin: 0;
+    }
+    .logout-button {
+        margin-top: 20px;
+    }
+    .logout-button span {
+        color: black;
+    }
 
 </style>
