@@ -3,7 +3,7 @@
         <Aside :user="user"></Aside>
         <Nav></Nav>
         <div id="contentContainer">
-            <router-view v-bind:csrf_token="csrf_token"/>
+            <router-view v-bind:csrf_token="csrf_token" :user="user"/>
         </div>
     </div>
 </template>
@@ -28,10 +28,9 @@
         created() {
             this.csrf_token = this.$parent.csrf_token;
             this.last_email = this.$parent.last_email
-            fetch('/authenticated-user')
-                .then(response => response.json())
-                .then(user => {
-                    this.user = user
+            this.$apiRequester.getUserInformations()
+                .then(response => {
+                    this.user = response.data
                 })
         },
     }

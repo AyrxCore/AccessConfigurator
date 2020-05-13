@@ -20,6 +20,7 @@ final class AuthenticatedUserController extends AbstractController
         $userResponse['connected'] = false;
         
         if($user) {
+            $userResponse['id'] = $user->getId();
             $userResponse['connected'] = true;
             $userResponse['firstname'] = $user->getFirstname();
             $userResponse['lastname'] = $user->getLastname();

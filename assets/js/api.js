@@ -17,4 +17,10 @@ export default class Api {
     logout() {
         return this.axios.get(`/logout`)
     }
+    getAllProjects(userId) {
+        return this.axios.get(`/internal/${userId}/projects`)
+    }
+    createNewProject(userId, data) {
+        return this.axios.get(`/internal/${userId}/newproject`, data)
+    }
 }
