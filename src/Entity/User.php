@@ -4,20 +4,23 @@ namespace App\Entity;
 
 use App\Entity\UuidGenerator\UuidBaseEntity;
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
- * @ORM\Entity(repositoryClass=UserRepository::class)
+ * @ORM\Entity(repositoryClass="App\Repository\UserRepository", repositoryClass=UserRepository::class)
  */
 class User extends UuidBaseEntity implements UserInterface
 {
     /**
+     * @var string
      * @ORM\Column(type="string", length=180, unique=true)
      */
     private $email;
 
     /**
+     * @var array
      * @ORM\Column(type="json")
      */
     private $roles = [];
@@ -29,15 +32,28 @@ class User extends UuidBaseEntity implements UserInterface
     private $password;
     
     /**
+     * @var string
      * @ORM\Column(type="string", length=180)
      */
     private $firstname;
     
     /**
+     * @var string
      * @ORM\Column(type="string", length=180)
      */
     private $lastname;
-
+    
+    /**
+     * @var ArrayCollection
+     * @ORM\OneToMany(targetEntity="App\Entity\Project", mappedBy="user")
+     */
+    private $projects;
+    
+    public function __construct() {
+        parent::__construct();
+        $this->projects = new ArrayCollection();
+    }
+    
     public function getEmail(): ?string
     {
         return $this->email;
@@ -141,6 +157,30 @@ class User extends UuidBaseEntity implements UserInterface
     public function setLastname($lastname): void
     {
         $this->lastname = $lastname;
+    }
+    
+    /**
+     * @return ArrayCollection
+     */
+    public function getProjects(): ArrayCollection
+    {
+        return $this->projects;
+    }
+    
+    /**
+     * @param Project $project
+     */
+    public function addProject($project){
+        $this->projects->add($project);
+        $project->setUser($this);
+    }
+    
+    /**
+     * @param Project $project
+     */
+    public function removeProject($project){
+        $this->projects->removeElement($project);
+        $project->setUser(null);
     }
     
 }

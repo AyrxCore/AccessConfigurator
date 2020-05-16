@@ -66,9 +66,9 @@
                     })
                     .then(data => {
                         if (data === 'authenticated') {
-                            location.reload();
-                            this.$store.commit('change', true);
+                            this.$store.commit('authenticationStatus', true);
                             this.$router.push('/projects');
+                            // location.reload();
                         } else {
                             this.isError = true;
                             this.errorMessage = data

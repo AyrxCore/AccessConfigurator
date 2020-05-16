@@ -12,34 +12,46 @@ use Doctrine\ORM\Mapping as ORM;
 class HouseSize extends UuidBaseEntity
 {
     /**
+     * @var HouseModel
      * @ORM\ManyToOne(targetEntity="App\Entity\HouseModel", inversedBy="houseSizes")
      */
     private $houseModel;
     
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @var int
+     * @ORM\Column(type="integer", length=255, nullable=true)
      */
     private $surface;
     
     /**
+     * @var int
      * @ORM\Column(type="integer", nullable=true)
      */
-    private $price;
+    private $lowerPrice;
 
     /**
+     * @var string
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $imgRdc;
 
     /**
+     * @var string
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $imgFloor;
 
     /**
+     * @var string
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $description;
+    
+    /**
+     * @var Project
+     * @ORM\OneToOne(targetEntity="App\Entity\Project", inversedBy="houseSize", cascade={"persist"}, orphanRemoval=true)
+     */
+    private $project;
     
     public function __construct()
     {
@@ -69,16 +81,16 @@ class HouseSize extends UuidBaseEntity
      */
     public function getPrice()
     {
-        return $this->price;
+        return $this->lowerPrice;
     }
 
     /**
-     * @param int $price
+     * @param int $lowerPrice
      * @return HouseSize
      */
-    public function setPrice($price)
+    public function setPrice($lowerPrice)
     {
-        $this->price = $price;
+        $this->lowerPrice = $lowerPrice;
         return $this;
     }
 

@@ -14,8 +14,7 @@ class Project extends UuidBaseEntity
 {
     /**
      * @var User
-     * @ORM\OneToOne(targetEntity="App\Entity\User")
-     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="projects")
      */
     private $user;
     
@@ -39,23 +38,32 @@ class Project extends UuidBaseEntity
     
     /**
      * @var HouseModel
-     * @ORM\OneToOne(targetEntity="App\Entity\HouseModel")
-     * @ORM\JoinColumn(name="house_model_id", referencedColumnName="id")
+     * @ORM\ManyToOne(targetEntity="App\Entity\HouseModel", cascade={"persist"}, inversedBy="project")
      */
     private $houseModel;
     
     /**
      * @var HouseSize
-     * @ORM\OneToOne(targetEntity="App\Entity\HouseSize")
-     * @ORM\JoinColumn(name="house_size_id", referencedColumnName="id")
+     * @ORM\OneToOne(targetEntity="App\Entity\HouseSize", cascade={"persist"}, mappedBy="project")
      */
     private $houseSize;
     
     /**
      * @var array
-     * @ORM\Column(name="state_project", type="json")
+     * @ORM\Column(name="state_project", type="json", nullable=true)
      */
     private $stateProject;
+    
+    /**
+     * @var bool
+     * @ORM\Column(name="fully_configured_options")
+     */
+    private $fullyConfiguredOptions;
+    
+    public function __construct() {
+        parent::__construct();
+        $this->fullyConfiguredOptions = false;
+    }
     
     /**
      * @return User
@@ -69,7 +77,7 @@ class Project extends UuidBaseEntity
      * @param User $user
      * @return Project
      */
-    public function setUser(User $user): Project
+    public function setUser(User $user = null): Project
     {
         $this->user = $user;
         return $this;
@@ -132,7 +140,7 @@ class Project extends UuidBaseEntity
     /**
      * @return HouseModel
      */
-    public function getHouseModel(): HouseModel
+    public function getHouseModel()
     {
         return $this->houseModel;
     }
@@ -150,7 +158,7 @@ class Project extends UuidBaseEntity
     /**
      * @return HouseSize
      */
-    public function getHouseSize(): HouseSize
+    public function getHouseSize()
     {
         return $this->houseSize;
     }
@@ -180,6 +188,24 @@ class Project extends UuidBaseEntity
     public function setStateProject(array $stateProject): Project
     {
         $this->stateProject = $stateProject;
+        return $this;
+    }
+    
+    /**
+     * @return bool
+     */
+    public function isFullyConfiguredOptions(): bool
+    {
+        return $this->fullyConfiguredOptions;
+    }
+    
+    /**
+     * @param bool $fullyConfiguredOptions
+     * @return Project
+     */
+    public function setFullyConfiguredOptions(bool $fullyConfiguredOptions): Project
+    {
+        $this->fullyConfiguredOptions = $fullyConfiguredOptions;
         return $this;
     }
     

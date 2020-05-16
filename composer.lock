@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c28cc7c14da0eab2bc4536420097c091",
+    "content-hash": "f82db7934233c04647d25a1f730049af",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -1137,6 +1137,84 @@
                 "static"
             ],
             "time": "2020-03-27T11:06:43+00:00"
+        },
+        {
+            "name": "greg0ire/enum",
+            "version": "v4.2.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/greg0ire/enum.git",
+                "reference": "8334b5210a4177f9669671551ac5a70d2ab58a12"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/greg0ire/enum/zipball/8334b5210a4177f9669671551ac5a70d2ab58a12",
+                "reference": "8334b5210a4177f9669671551ac5a70d2ab58a12",
+                "shasum": ""
+            },
+            "require": {
+                "doctrine/inflector": "^1.0",
+                "php": "^7.1"
+            },
+            "conflict": {
+                "symfony/form": "<3.2 || >=6.0 <999",
+                "symfony/validator": "<3.2 || >=6.0 <999"
+            },
+            "require-dev": {
+                "matthiasnoback/symfony-dependency-injection-test": "^4.0",
+                "symfony/config": "^4.2 || ^5.0",
+                "symfony/dependency-injection": "^4.2 || ^5.0",
+                "symfony/form": "^4.2.5 || ^5.0",
+                "symfony/framework-bundle": "^4.2 || ^5.0",
+                "symfony/http-kernel": "^4.2 || ^5.0",
+                "symfony/options-resolver": "^4.2 || ^5.0",
+                "symfony/phpunit-bridge": "^5.0",
+                "symfony/translation": "^4.2 || ^5.0",
+                "symfony/translation-contracts": "^2.0",
+                "symfony/twig-bundle": "^4.2 || ^5.0",
+                "symfony/validator": "^4.3.6 || ^5.0",
+                "twig/twig": "^2.4.2 || ^3.0"
+            },
+            "suggest": {
+                "symfony/form": "To use enum form type",
+                "symfony/validator": "To use enum validator"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-legacy-stable": "3.x-dev",
+                    "dev-master": "4.x-dev",
+                    "dev-unstable": "5.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Greg0ire\\Enum\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "CC-BY-SA-3.0"
+            ],
+            "authors": [
+                {
+                    "name": "Grégoire Paris",
+                    "email": "postmaster@greg0ire.fr"
+                },
+                {
+                    "name": "Sullivan Sénéchal",
+                    "email": "soullivaneuh@gmail.com"
+                }
+            ],
+            "description": "work around the missing enum type in php",
+            "keywords": [
+                "enum",
+                "enumeration",
+                "form",
+                "symfony",
+                "validator"
+            ],
+            "time": "2020-03-22T15:37:38+00:00"
         },
         {
             "name": "jdorn/sql-formatter",

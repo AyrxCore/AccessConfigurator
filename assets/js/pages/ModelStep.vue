@@ -2,12 +2,14 @@
 
     <div id="modelStepContainer">
         <h1>Choisissez un modèle de la gamme Access</h1>
-        <div class="card-container">
-            <el-col :span="6" v-for="(model, key) in allModels" :key="key">
-                <div @click="chooseModel">
-                    <el-card :body-style="{ padding: '0px' }">
+        <el-container class="cards" v-loading="loading" element-loading-background="rgba(255, 255, 255, 1)">
+            <el-col :class="chosenModel.id === model.id ? 'card-container selected' : 'card-container not-selected'" :span="6" v-for="(model, key) in allModels"
+                    :key="key">
+                <div @click="handleModel(model)" class="test">
+                    <el-card
+                            :body-style="{ padding: '0px' }">
                         <div class="card-img-container">
-                            <img :src="model.img" class="image">
+                            <img :src="'../../img/'+model.img" class="image">
                         </div>
                         <div class="card-text-container">
                             <h3 class="title-model">
@@ -23,7 +25,10 @@
                     </el-card>
                 </div>
             </el-col>
-        </div>
+        </el-container>
+        <el-row type="flex" justify="center" class="model-validation">
+            <el-button type="success" round :disabled="disabled" @click="chooseModel">Passer au choix de la surface</el-button>
+        </el-row>
     </div>
 
 </template>
@@ -34,53 +39,63 @@
         name: "ModelStep",
         data() {
             return {
-                allModels: [
-                    {name: 'Acacia',
-                    img: '../../img/acacia.jpg',
-                    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque at quam eu augue euismod sagittis sit amet et erat. Nullam sed velit in justo auctor mollis. Etiam vitae odio ac nibh fermentum semper. Ut at turpis sem. Maecenas vitae suscipit nisl, ac egestas velit. Mauris porttitor congue ipsum, et eleifend dui dapibus sit amet.',
-                    lowerPrice: '125 000'},
-                    {name: 'Lotus',
-                        img: '../../img/lotus.jpg',
-                        description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque at quam eu augue euismod sagittis sit amet et erat. Nullam sed velit in justo auctor mollis. Etiam vitae odio ac nibh fermentum semper. Ut at turpis sem. Maecenas vitae suscipit nisl, ac egestas velit. Mauris porttitor congue ipsum, et eleifend dui dapibus sit amet.',
-                        lowerPrice: '150 000'},
-                    {name: 'Magnolia',
-                        img: '../../img/magnolia.jpg',
-                        description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque at quam eu augue euismod sagittis sit amet et erat. Nullam sed velit in justo auctor mollis. Etiam vitae odio ac nibh fermentum semper. Ut at turpis sem. Maecenas vitae suscipit nisl, ac egestas velit. Mauris porttitor congue ipsum, et eleifend dui dapibus sit amet.',
-                        lowerPrice: '110 000'},
-                    ]
+                allModels: [],
+                disabled: true,
+                loading: true,
+                chosenModel: {},
+                cardSelected: false,
+                projectId: ''
             }
         },
         methods: {
             chooseModel() {
-                this.$router.push({name: 'SizeStep', param:{model: 'Acacia'}})
+                this.$apiRequester.saveChosenModel(this.projectId, this.chosenModel).then((response) => {
+                    console.log(response.data)
+                })
+            },
+            handleModel(model) {
+                if(this.chosenModel === {} || this.chosenModel !== model) {
+                    this.chosenModel = model;
+                    this.disabled = false;
+                } else {
+                    this.chosenModel = {};
+                    this.disabled = true;
+                }
             }
-        }
+        },
+        created() {
+            this.projectId = this.$route.query.projectId;
+            this.$apiRequester.getAllModels().then((response) => {
+                this.allModels = response.data
+                this.loading = false;
+            })
+        },
     }
 
 </script>
 
 <style scoped>
 
-    .card-container {
+    .cards {
         display: flex;
         flex-wrap: wrap;
         justify-content: space-around;
-        margin-top: 30px;
+        margin-top: 50px;
     }
     .card-img-container {
-        width: 500px;
-        height: 350px;
+        width: 450px;
+        height: 300px;
     }
     .card-img-container img {
         width: 100%;
         height: 100%;
     }
-    .card-container > div {
-        width: 500px;
+    .cards .card-container {
+        width: 450px;
         cursor: pointer;
         transition: transform 0.3s, box-shadow 0.3s;
     }
-    .card-container > div:hover {
+    .cards .card-container.not-selected:hover {
         transform: scale(1.03);
         -webkit-box-shadow: 0 0 14px 3px rgba(87,53,51,1);
         -moz-box-shadow: 0 0 14px 3px rgba(87,53,51,1);
@@ -91,6 +106,20 @@
     }
     .price-model {
         margin-top: 10px;
+    }
+    .model-validation {
+        margin-top: 80px;
+    }
+    .model-validation button:hover[disabled=false] {
+        background: #67C23A;
+        border-color: #67C23A;
+        color: #FFF;
+    }
+    .selected {
+        transform: scale(1.03);
+        -webkit-box-shadow: 0 0 18px 20px rgba(87,53,51,1);
+        -moz-box-shadow: 0 0 18px 20px rgba(87,53,51,1);
+        box-shadow: 0 0 18px 20px rgba(87,53,51,1);
     }
 
 </style>

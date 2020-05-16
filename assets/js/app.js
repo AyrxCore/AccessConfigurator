@@ -4,6 +4,7 @@ import Api from './api'
 import { store } from './vuex/store';
 import Vuex from 'vuex';
 import ElementUI from 'element-ui';
+import locale from 'element-ui/lib/locale/lang/fr'
 import VueRouter from "vue-router";
 import routerApp from './router'
 
@@ -18,7 +19,7 @@ import Icon from "vue-awesome/components/Icon";
 Vue.component("v-icon", Icon);
 
 Vue.use(Vuex);
-Vue.use(ElementUI);
+Vue.use(ElementUI, {locale});
 Vue.use(VueRouter);
 
 Vue.config.productionTip = false;
@@ -48,7 +49,7 @@ new Vue({
     beforeMount () {
         this.csrf_token = this.$el.attributes['data-token'].value
         this.last_email = this.$el.attributes['data-last-email'].value
-        this.$store.commit('change', this.$el.attributes['data-is-authenticated'].value)
+        this.$store.commit('authenticationStatus', this.$el.attributes['data-is-authenticated'].value)
     }
 });
 

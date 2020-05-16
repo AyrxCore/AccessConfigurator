@@ -22,31 +22,31 @@ const routes = [
         path: '/projects',
         name: 'ListProjects',
         component: ListProjects,
-        meta: {requiresAuth: true}
+        // meta: {requiresAuth: true}
     },
     {
         path: '/models',
         name: 'ModelStep',
         component: ModelStep,
-        meta: {requiresAuth: true}
+        // meta: {requiresAuth: true}
     },
     {
         path: '/sizes',
         name: 'SizeStep',
         component: SizeStep,
-        meta: {requiresAuth: true}
+        // meta: {requiresAuth: true}
     },
     {
         path: '/options',
         name: 'OptionsStep',
         component: OptionsStep,
-        meta: {requiresAuth: true}
+        // meta: {requiresAuth: true}
     },
     {
         path: '/summary',
         name: 'SummaryStep',
         component: SummaryStep,
-        meta: {requiresAuth: true}
+        // meta: {requiresAuth: true}
     }
 ];
 

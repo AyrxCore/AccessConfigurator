@@ -13,29 +13,40 @@ use Doctrine\ORM\Mapping as ORM;
 class HouseModel extends UuidBaseEntity
 {
     /**
+     * @var string
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $name;
 
     /**
+     * @var int
      * @ORM\Column(type="integer", nullable=true)
      */
     private $lowerPrice;
 
     /**
+     * @var string
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $img;
     
     /**
+     * @var string
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $description;
     
     /**
+     * @var ArrayCollection
      * @ORM\OneToMany(targetEntity="App\Entity\HouseSize", mappedBy="houseModel", cascade={"persist"}, orphanRemoval=true)
      */
     private $houseSizes;
+    
+    /**
+     * @var Project
+     * @ORM\OneToMany(targetEntity="App\Entity\Project", mappedBy="houseModel")
+     */
+    private $project;
     
     public function __construct()
     {
@@ -141,4 +152,19 @@ class HouseModel extends UuidBaseEntity
         $houseSize->setHouseModel(null);
     }
     
+    /**
+     * @return Project
+     */
+    public function getProject(): Project
+    {
+        return $this->project;
+    }
+    
+    /**
+     * @param Project $project
+     */
+    public function setProject(Project $project): void
+    {
+        $this->project = $project;
+    }
 }

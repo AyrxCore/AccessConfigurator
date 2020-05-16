@@ -72,6 +72,9 @@
     "doctrine/reflection": {
         "version": "v1.0.0"
     },
+    "greg0ire/enum": {
+        "version": "v4.2.1"
+    },
     "jdorn/sql-formatter": {
         "version": "v1.2.17"
     },

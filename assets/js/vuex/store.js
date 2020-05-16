@@ -8,7 +8,7 @@ export const store = new Vuex.Store({
         authenticated: false
     },
     mutations: {
-        change (state, value) {
+        authenticationStatus (state, value) {
             state.authenticated = value
         }
     },
