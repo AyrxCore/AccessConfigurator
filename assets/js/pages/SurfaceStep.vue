@@ -1,33 +1,31 @@
 <template>
 
-    <div id="modelStepContainer">
-        <h1>Choisissez un modèle de la gamme Access</h1>
+    <div id="surfaceStepContainer">
+        <h1>Choisissez une surface pour le modèle 'Acacia'</h1>
         <el-container class="cards" v-loading="loading" element-loading-background="rgba(255, 255, 255, 1)">
-            <el-col :class="chosenModel.id === model.id ? 'card-container selected' : 'card-container not-selected'" :span="6" v-for="(model, key) in allModels"
-                    :key="key">
-                <div @click="handleModel(model)" class="test">
-                    <el-card
-                            :body-style="{ padding: '0px' }">
+            <el-col :class="chosenSurface.id === surface.id ? 'card-container selected' : 'card-container not-selected'" :span="6" v-for="(surface, key) in allSurfaces" :key="key">
+                <div @click="handleSurface(surface)">
+                    <el-card :body-style="{ padding: '0px' }">
                         <div class="card-img-container">
-                            <img :src="'../../img/'+model.img" class="image">
+                            <img :src="'../../img/'+surface.imgRdc" class="image">
                         </div>
                         <div class="card-text-container">
-                            <h3 class="title-model">
-                                {{model.name}}
+                            <h3 class="title-surface">
+                                {{surface.surface}} m²
                             </h3>
-                            <div class="description-model">
-                                {{model.description}}
+                            <div class="description-surface">
+                                {{surface.description}}
                             </div>
-                            <h4 class="price-model">
-                                A partir de {{model.lowerPrice}} €
+                            <h4 class="price-surface">
+                                A partir de {{surface.lowerPrice}} €
                             </h4>
                         </div>
                     </el-card>
                 </div>
             </el-col>
         </el-container>
-        <el-row type="flex" justify="center" class="model-validation">
-            <el-button type="success" round :disabled="disabled" @click="chooseModel">Passer au choix de la surface</el-button>
+        <el-row type="flex" justify="center" class="surface-validation">
+            <el-button type="success" round :disabled="disabled" @click="chooseSurface">Passer au choix des options</el-button>
         </el-row>
     </div>
 
@@ -36,37 +34,37 @@
 <script>
 
     export default {
-        name: "ModelStep",
+        name: "SurfaceStep",
         data() {
             return {
-                allModels: [],
+                allSurfaces: [],
                 disabled: true,
                 loading: true,
-                chosenModel: {},
+                chosenSurface: {},
                 cardSelected: false,
                 projectId: ''
             }
         },
         methods: {
-            chooseModel() {
-                this.$apiRequester.saveChosenModel(this.projectId, this.chosenModel).then((response) => {
-                    this.$router.push({name: 'SurfaceStep', query: {projectId: this.projectId}});
+            chooseSurface() {
+                this.$apiRequester.saveChosenSurface(this.projectId, this.chosenSurface).then((response) => {
+                    this.$router.push({name: 'OptionsStep', query: {projectId: this.projectId}});
                 })
             },
-            handleModel(model) {
-                if(this.chosenModel === {} || this.chosenModel !== model) {
-                    this.chosenModel = model;
+            handleSurface(surface) {
+                if(this.chosenSurface === {} || this.chosenSurface !== surface) {
+                    this.chosenSurface = surface;
                     this.disabled = false;
                 } else {
-                    this.chosenModel = {};
+                    this.chosenSurface = {};
                     this.disabled = true;
                 }
             }
         },
         created() {
             this.projectId = this.$route.query.projectId;
-            this.$apiRequester.getAllModels().then((response) => {
-                this.allModels = response.data
+            this.$apiRequester.getAllSurfaces(this.projectId).then((response) => {
+                this.allSurfaces = response.data
                 this.loading = false;
             })
         },
@@ -104,13 +102,13 @@
     .card-text-container {
         padding: 10px;
     }
-    .price-model {
+    .price-surface {
         margin-top: 10px;
     }
-    .model-validation {
+    .surface-validation {
         margin-top: 80px;
     }
-    .model-validation button:hover[disabled=false] {
+    .surface-validation button:hover[disabled=false] {
         background: #67C23A;
         border-color: #67C23A;
         color: #FFF;

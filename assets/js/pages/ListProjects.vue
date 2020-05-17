@@ -18,13 +18,19 @@
                         :show-overflow-tooltip="true">
                 </el-table-column>
                 <el-table-column
-                        label="Nom"
+                        label="Nom du projet"
+                        prop="project_name"
+                        width="180"
+                        :show-overflow-tooltip="true">
+                </el-table-column>
+                <el-table-column
+                        label="Nom du client"
                         prop="client_name"
                         width="180"
                         :show-overflow-tooltip="true">
                 </el-table-column>
                 <el-table-column
-                        label="Adresse"
+                        label="Adresse du client"
                         prop="client_address"
                         width="500"
                         :show-overflow-tooltip="true">
@@ -125,10 +131,9 @@
             handleCloseDeleteModal(abort) {
                 if (!abort) {
                     this.$apiRequester.deleteProject('6aa1e79f-1d95-4624-a839-232702881df9', this.projectToDelete).then((response) => {
-                        console.log(response.data)
+                        this.loading = true;
+                        this.refreshListProjects('6aa1e79f-1d95-4624-a839-232702881df9');
                     })
-                    // this.loading = true;
-                    // this.refreshListProjects();
                 }
                 this.dialogVisible = false;
             },

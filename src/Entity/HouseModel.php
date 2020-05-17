@@ -38,9 +38,9 @@ class HouseModel extends UuidBaseEntity
     
     /**
      * @var ArrayCollection
-     * @ORM\OneToMany(targetEntity="App\Entity\HouseSize", mappedBy="houseModel", cascade={"persist"}, orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="App\Entity\HouseSurface", mappedBy="houseModel", cascade={"persist"}, orphanRemoval=true)
      */
-    private $houseSizes;
+    private $houseSurfaces;
     
     /**
      * @var Project
@@ -51,7 +51,7 @@ class HouseModel extends UuidBaseEntity
     public function __construct()
     {
         parent::__construct();
-        $this->houseSizes = new ArrayCollection();
+        $this->houseSurfaces = new ArrayCollection();
     }
     
     /**
@@ -129,27 +129,27 @@ class HouseModel extends UuidBaseEntity
     /**
      * @return ArrayCollection
      */
-    public function getHouseSizes(): ArrayCollection
+    public function getHouseSurfaces(): ArrayCollection
     {
-        return $this->houseSizes;
+        return $this->houseSurfaces;
     }
     
     /**
-     * @param HouseSize $houseSize
+     * @param HouseSurface $houseSurface
      */
-    public function addHouseSize(HouseSize $houseSize): void
+    public function addHouseSurface(HouseSurface $houseSurface): void
     {
-        $this->houseSizes->add($houseSize);
-        $houseSize->setHouseModel($this);
+        $this->houseSurfaces->add($houseSurface);
+        $houseSurface->setHouseModel($this);
     }
     
     /**
-     * @param HouseSize $houseSize
+     * @param HouseSurface $houseSurface
      */
-    public function removeHouseSize(HouseSize $houseSize): void
+    public function removeHouseSurface(HouseSurface $houseSurface): void
     {
-        $this->houseSizes->removeElement($houseSize);
-        $houseSize->setHouseModel(null);
+        $this->houseSurfaces->removeElement($houseSurface);
+        $houseSurface->setHouseModel(null);
     }
     
     /**

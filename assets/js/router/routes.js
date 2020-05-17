@@ -2,7 +2,7 @@ import HomePage from "../pages/HomePage";
 import Login from "../pages/Login";
 import ListProjects from "../pages/ListProjects";
 import ModelStep from "../pages/ModelStep";
-import SizeStep from "../pages/SizeStep";
+import SizeStep from "../pages/SurfaceStep";
 import OptionsStep from "../pages/OptionsStep";
 import SummaryStep from "../pages/SummaryStep";
 

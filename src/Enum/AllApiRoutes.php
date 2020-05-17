@@ -16,7 +16,7 @@ abstract class AllApiRoutes extends AbstractEnum {
     
     const MODEL_STEP = 'ModelStep';
     
-    const SIZE_STEP = 'SizeStep';
+    const SURFACE_STEP = 'SurfaceStep';
     
     const OPTIONS_STEP = 'OptionsStep';
     

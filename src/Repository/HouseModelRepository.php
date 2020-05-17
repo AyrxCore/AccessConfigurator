@@ -9,7 +9,6 @@ use Doctrine\Persistence\ManagerRegistry;
 /**
  * @method HouseModel|null find($id, $lockMode = null, $lockVersion = null)
  * @method HouseModel|null findOneBy(array $criteria, array $orderBy = null)
- * @method HouseModel[]    findAll()
  * @method HouseModel[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
 class HouseModelRepository extends ServiceEntityRepository
@@ -18,34 +17,9 @@ class HouseModelRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, HouseModel::class);
     }
-
-    // /**
-    //  * @return HouseModel[] Returns an array of HouseModel objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    
+    public function findAll()
     {
-        return $this->createQueryBuilder('h')
-            ->andWhere('h.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('h.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
+        return $this->findBy(array(), array('name' => 'ASC'));
     }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?HouseModel
-    {
-        return $this->createQueryBuilder('h')
-            ->andWhere('h.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
-
 }

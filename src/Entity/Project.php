@@ -43,10 +43,10 @@ class Project extends UuidBaseEntity
     private $houseModel;
     
     /**
-     * @var HouseSize
-     * @ORM\OneToOne(targetEntity="App\Entity\HouseSize", cascade={"persist"}, mappedBy="project")
+     * @var HouseSurface
+     * @ORM\ManyToOne(targetEntity="App\Entity\HouseSurface", cascade={"persist"}, inversedBy="project")
      */
-    private $houseSize;
+    private $houseSurface;
     
     /**
      * @var array
@@ -62,7 +62,7 @@ class Project extends UuidBaseEntity
     
     public function __construct() {
         parent::__construct();
-        $this->fullyConfiguredOptions = false;
+        $this->fullyConfiguredOptions = 0;
     }
     
     /**
@@ -156,20 +156,20 @@ class Project extends UuidBaseEntity
     }
     
     /**
-     * @return HouseSize
+     * @return HouseSurface
      */
-    public function getHouseSize()
+    public function getHouseSurface()
     {
-        return $this->houseSize;
+        return $this->houseSurface;
     }
     
     /**
-     * @param HouseSize $houseSize
+     * @param HouseSurface $houseSurface
      * @return Project
      */
-    public function setHouseSize(HouseSize $houseSize): Project
+    public function setHouseSurface(HouseSurface $houseSurface): Project
     {
-        $this->houseSize = $houseSize;
+        $this->houseSurface = $houseSurface;
         return $this;
     }
     

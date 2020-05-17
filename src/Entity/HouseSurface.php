@@ -6,50 +6,51 @@ use App\Entity\UuidGenerator\UuidBaseEntity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Table(name="house_size")
- * @ORM\Entity(repositoryClass="App\Repository\HouseSizeRepository")
+ * @ORM\Table(name="house_surface")
+ * @ORM\Entity(repositoryClass="App\Repository\HouseSurfaceRepository")
  */
-class HouseSize extends UuidBaseEntity
+class HouseSurface extends UuidBaseEntity
 {
     /**
      * @var HouseModel
-     * @ORM\ManyToOne(targetEntity="App\Entity\HouseModel", inversedBy="houseSizes")
+     * @ORM\Column(name="house_model")
+     * @ORM\ManyToOne(targetEntity="App\Entity\HouseModel", inversedBy="houseSurfaces")
      */
     private $houseModel;
     
     /**
      * @var int
-     * @ORM\Column(type="integer", length=255, nullable=true)
+     * @ORM\Column(name="surface", type="integer", length=255, nullable=true)
      */
     private $surface;
     
     /**
      * @var int
-     * @ORM\Column(type="integer", nullable=true)
+     * @ORM\Column(name="lower_price", type="integer", nullable=true)
      */
     private $lowerPrice;
 
     /**
      * @var string
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(name="img_rdc", type="string", length=255, nullable=true)
      */
     private $imgRdc;
 
     /**
      * @var string
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(name="img_floor", type="string", length=255, nullable=true)
      */
     private $imgFloor;
 
     /**
      * @var string
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(name="description", type="string", length=255, nullable=true)
      */
     private $description;
     
     /**
      * @var Project
-     * @ORM\OneToOne(targetEntity="App\Entity\Project", inversedBy="houseSize", cascade={"persist"}, orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="App\Entity\Project", mappedBy="houseSurface")
      */
     private $project;
     
@@ -68,7 +69,7 @@ class HouseSize extends UuidBaseEntity
 
     /**
      * @param HouseModel $houseModel
-     * @return HouseSize
+     * @return HouseSurface
      */
     public function setHouseModel($houseModel)
     {
@@ -79,16 +80,16 @@ class HouseSize extends UuidBaseEntity
     /**
      * @return int
      */
-    public function getPrice()
+    public function getLowerPrice()
     {
         return $this->lowerPrice;
     }
 
     /**
      * @param int $lowerPrice
-     * @return HouseSize
+     * @return HouseSurface
      */
-    public function setPrice($lowerPrice)
+    public function setLowerPrice($lowerPrice)
     {
         $this->lowerPrice = $lowerPrice;
         return $this;
@@ -104,7 +105,7 @@ class HouseSize extends UuidBaseEntity
 
     /**
      * @param string $imgRdc
-     * @return HouseSize
+     * @return HouseSurface
      */
     public function setImgRdc($imgRdc)
     {
@@ -122,7 +123,7 @@ class HouseSize extends UuidBaseEntity
 
     /**
      * @param string $imgFloor
-     * @return HouseSize
+     * @return HouseSurface
      */
     public function setImgFloor($imgFloor)
     {
@@ -140,7 +141,7 @@ class HouseSize extends UuidBaseEntity
 
     /**
      * @param int $surface
-     * @return HouseSize
+     * @return HouseSurface
      */
     public function setSurface($surface)
     {
@@ -158,7 +159,7 @@ class HouseSize extends UuidBaseEntity
 
     /**
      * @param string $description
-     * @return HouseSize
+     * @return HouseSurface
      */
     public function setDescription($description)
     {

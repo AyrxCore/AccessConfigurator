@@ -41,8 +41,23 @@ export default class Api {
         return this.axios.get(`/internal/models`);
     }
     saveChosenModel(projectId, chosenModel) {
-        return this.axios.get(`/internal/${projectId}/save_model`, chosenModel);
+        return this.axios.post(`/internal/${projectId}/chosen_model`, chosenModel);
     }
     // ------ ###### ------ //
+
+    // ------ SIZES ------ //
+    getAllSurfaces(projectId) {
+        return this.axios.get(`/internal/${projectId}/sizes`);
+    }
+    saveChosenSurface(projectId, chosenSurface) {
+        return this.axios.post(`/internal/${projectId}/chosen_surface`, chosenSurface);
+    }
+    // ------ ##### ------ //
+
+    // ------ OPTIONS ------ //
+    getAllOptions(projectId) {
+        return this.axios.get(`/internal/${projectId}/options`);
+    }
+    // ------ ####### ------ //
 
 }
