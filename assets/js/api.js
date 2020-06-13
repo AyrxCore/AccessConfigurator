@@ -25,6 +25,9 @@ export default class Api {
     getAllProjects(userId) {
         return this.axios.get(`/internal/${userId}/projects`);
     }
+    getProject(projectId) {
+        return this.axios.get(`/internal/project/${projectId}`);
+    }
     createNewProject(userId, data) {
         return this.axios.post(`/internal/${userId}/new_project`, data);
     }

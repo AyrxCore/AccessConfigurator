@@ -139,7 +139,7 @@
             },
             handleEdit(projectId) {
                 this.$apiRequester.editProject(projectId).then((response) => {
-                    this.$router.push({name: response.data, query: {projectId: projectId}});
+                    this.$router.push({name: response.data, query: {projectId: projectId}, props: {projectId: projectId}});
                 })
             },
             handleDelete(projectId) {
@@ -150,7 +150,7 @@
                 this.$apiRequester.createNewProject( '6aa1e79f-1d95-4624-a839-232702881df9', this.newProject).then((response) => {
                     if (response.status === 200) {
                         const projectId = response.data;
-                        this.$router.push({name: 'ModelStep' , query: {projectId: projectId}});
+                        this.$router.push({name: 'ModelStep' , query: {projectId: projectId}, props: {projectId: projectId}});
                     }
                 })
             },

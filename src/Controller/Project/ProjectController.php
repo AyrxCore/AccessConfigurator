@@ -38,11 +38,51 @@ class ProjectController extends AbstractController
                 $responseProject['client_address'] = $project->getClientAddress();
                 $responseProject['model'] = $project->getHouseModel() === null ? "Non sélectionné" : $project->getHouseModel()->getName();
                 $responseProject['surface'] = $project->getHouseSurface() === null ? "Non sélectionnée" : $project->getHouseSurface()->getSurface();
+                $responseProject['lowerPrice'] = 0;
+                
+                if($project->getHouseSurface() !== null) {
+                    $responseProject['lowerPrice'] = $project->getHouseSurface()->getLowerPrice();
+                } else if ($project->getHouseModel() !== null){
+                    $responseProject['lowerPrice'] = $project->getHouseSurface()->getLowerPrice();
+                }
                 
                 $response[] = $responseProject;
             }
         }
         return new JsonResponse($response);
+    }
+    
+    /**
+     * @Route("/internal/project/{projectId}", name="project")
+     * @param string $projectId
+     * @param EntityManagerInterface $em
+     * @return Response
+     * @throws Exception
+     */
+    public function getProject(string $projectId, EntityManagerInterface $em): Response
+    {
+        $project = $em->getRepository(Project::class)->findOneBy(['id' => $projectId]);
+        
+        if(!($project instanceof Project)) {
+            throw new Exception('No project was found with this project ID');
+        }
+        
+        $responseProject['id'] = $project->getId();
+        $responseProject['project_name'] = $project->getName();
+        $responseProject['date'] = $project->getCreated()->format('d-m-Y');
+        $responseProject['client_name'] = $project->getClientName();
+        $responseProject['client_address'] = $project->getClientAddress();
+        $responseProject['model'] = $project->getHouseModel() === null ? "Non sélectionné" : $project->getHouseModel()->getName();
+        $responseProject['surface'] = $project->getHouseSurface() === null ? "Non sélectionnée" : $project->getHouseSurface()->getSurface();
+        $responseProject['lowerPrice'] = 0;
+    
+        if($project->getHouseSurface() !== null) {
+            $responseProject['lowerPrice'] = $project->getHouseSurface()->getLowerPrice();
+        } else if ($project->getHouseModel() !== null){
+            $responseProject['lowerPrice'] = $project->getHouseSurface()->getLowerPrice();
+        }
+        
+        return new JsonResponse($responseProject);
     }
     
     /**

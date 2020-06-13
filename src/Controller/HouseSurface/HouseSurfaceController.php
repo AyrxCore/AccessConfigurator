@@ -61,6 +61,7 @@ class HouseSurfaceController
         $houseSurface = $em->getRepository(HouseSurface::class)->findOneBy(['id' => $chosenSurface['id']]);
         
         $project->setHouseSurface($houseSurface);
+        $project->setLowerPrice($houseSurface->getLowerPrice());
         
         $em->persist($project);
         $em->flush();

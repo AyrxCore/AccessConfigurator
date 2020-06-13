@@ -21,6 +21,7 @@
         "axios": "^0.18.0",
         "el-search-table-pagination": "^0.4.31",
         "element-ui": "^2.13.1",
+        "lodash": "^4.17.15",
         "vue-awesome": "^4.0.2",
         "vue-router": "^3.0.1",
         "vuex": "^3.0.1"

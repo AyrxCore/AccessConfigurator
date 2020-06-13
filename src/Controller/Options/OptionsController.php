@@ -31,6 +31,7 @@ class OptionsController extends AbstractController
         $allProducts = $em->getRepository(Product::class)->findAll();
         
         $allSpecs = $em->getRepository(ProductSpec::class)->findAll();
+        
         $specsPricesNotNull = array_filter($allSpecs, function(ProductSpec $productSpec) {
             return $productSpec->getPrices() !== null;
         });
@@ -39,59 +40,106 @@ class OptionsController extends AbstractController
                     return $specPrice['model'] === $houseModel->getId() && $specPrice['surface'] === $houseSurface->getId();
                 }) !== [];
         });
-        
-        $response = [];
+        $specsColor = array_filter($specsForThisModelAndSurface, function(ProductSpec $productSpec) {
+            return $productSpec->getColor() !== null;
+        });
+        $specsType = array_filter($specsForThisModelAndSurface, function(ProductSpec $productSpec) {
+            return $productSpec->getType() !== null;
+        });
+        $specsMaterial = array_filter($specsForThisModelAndSurface, function(ProductSpec $productSpec) {
+            return $productSpec->getMaterial() !== null;
+        });
     
+        $responseAllOptions = [];
+        
         /** @var Category $category */
         foreach ($allCategories as $category) {
-            $responseCategory = [];
-            $responseCategory['category']['id'] = $category->getId();
-            $responseCategory['category']['name'] = $category->getName();
+            
+            $responseGlobal = [];
+            $responseGlobal['name'] = $category->getName();
         
             $products = array_filter($allProducts, function(Product $product)use($category) {
                 return $product->getCategory()->getId() === $category->getId();
             });
-            $responseCategory['products'] = [];
-            foreach ($products as $product) {
-                foreach ($specsForThisModelAndSurface as $spec) {
-                    $responseProduct = [];
-                    if($spec->getProduct()->getId() === $product->getId()) {
-                        $responseProduct['id'] = $product->getId();
-                        $responseProduct['name'] = $product->getName();
-                        $responseCategory['products'][] = $responseProduct;
-                    }
-                }
-                $responseCategory['products'] = $this->unique_multidim_array($responseCategory['products'], 'id');
             
-                foreach ($specsForThisModelAndSurface as $spec) {
-                    $responseSpec = [];
-                    if($spec->getProduct()->getId() === $product->getId()) {
-                        $responseSpec['id'] = $spec->getId();
-                        $responseSpec['type'] = $spec->getType();
-                        if($spec->getColor() !== null)
-                            $responseSpec['color'] = $spec->getColor();
-                        if($spec->getMaterial() !== null)
-                            $responseSpec['material'] = $spec->getMaterial();
-                        
-                        $price = array_values(array_filter($spec->getPrices(), function ($specPrice)use($houseModel, $houseSurface) {
+            /** @var Product $product */
+            foreach ($products as $product) {
+                $oneProduct = [];
+                
+                $oneProduct['name'] = $product->getName();
+                
+                $productSpecsColor = array_filter($specsColor, function(ProductSpec $productSpec)use($product) {
+                    return $productSpec->getProduct()->getId() === $product->getId();
+                });
+                
+                if($productSpecsColor !== []) {
+                    /** @var ProductSpec $color */
+                    foreach ($productSpecsColor as $specColor) {
+                        $oneColor = [];
+                        $oneColor['name'] = $specColor->getColor();
+    
+                        $price = array_values(array_filter($specColor->getPrices(), function ($specPrice)use($houseModel, $houseSurface) {
                            return $specPrice['model'] === $houseModel->getId() && $specPrice['surface'] === $houseSurface->getId();
                         }));
-                        
-                        $responseSpec['price'] = $price[0]['price'];
     
-                        $responseCategory['specs'][] = $responseSpec;
+                        $oneColor['price'] = $price[0]['price'];
+                        $oneProduct['colors'][$specColor->getId()] = $oneColor;
                     }
                 }
+    
+                $productSpecsType = array_filter($specsType, function(ProductSpec $productSpec)use($product) {
+                    return $productSpec->getProduct()->getId() === $product->getId();
+                });
+                
+                if($productSpecsType !== []) {
+                    /** @var ProductSpec $color */
+                    foreach ($productSpecsType as $specType) {
+                        $oneType = [];
+                        $oneType['name'] = $specType->getType();
+            
+                        $price = array_values(array_filter($specType->getPrices(), function ($specPrice)use($houseModel, $houseSurface) {
+                            return $specPrice['model'] === $houseModel->getId() && $specPrice['surface'] === $houseSurface->getId();
+                        }));
+    
+                        $oneType['price'] = $price[0]['price'];
+                        $oneProduct['types'][$specType->getId()] = $oneType;
+                    }
+                }
+    
+                $productSpecsMaterial = array_filter($specsMaterial, function(ProductSpec $productSpec)use($product) {
+                    return $productSpec->getProduct()->getId() === $product->getId();
+                });
+    
+                if($productSpecsMaterial !== []) {
+                    /** @var ProductSpec $color */
+                    foreach ($productSpecsMaterial as $specMaterial) {
+                        $oneMaterial = [];
+                        $oneMaterial['name'] = $specMaterial->getMaterial();
+            
+                        $price = array_values(array_filter($specMaterial->getPrices(), function ($specPrice)use($houseModel, $houseSurface) {
+                            return $specPrice['model'] === $houseModel->getId() && $specPrice['surface'] === $houseSurface->getId();
+                        }));
+    
+                        $oneMaterial['price'] = $price[0]['price'];
+                        $oneProduct['matters'][$specMaterial->getId()] = $oneMaterial;
+                    }
+                }
+                $responseGlobal['products'][$product->getId()] = $oneProduct;
             }
-            $response[] = $responseCategory;
+            $responseAllOptions[$category->getId()] = $responseGlobal;
+        }
+        $responseAllProducts = [];
+        
+        foreach ($responseAllOptions as $option) {
+            foreach ($option['products'] as $productId => $product) {
+                $responseAllProducts[$productId] = $product;
+            }
         }
         
-        // remove Category With Specs Empty
-         $response = array_values(array_filter($response, function ($category) {
-           return isset($category['specs']);
-        }));
-        
-        return new JsonResponse($response);
+        return new JsonResponse([
+            'allOptions' => $responseAllOptions,
+            'allProducts' => $responseAllProducts
+        ]);
     }
     
     public function unique_multidim_array($array, $key) {
